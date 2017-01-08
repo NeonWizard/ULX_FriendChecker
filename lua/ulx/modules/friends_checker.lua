@@ -10,7 +10,6 @@ function ulx.checkFriends(caller, target_player)
 			local friendsList = friendsJson["friendslist"]["friends"]
 
 			local friendsFoundOnServer = {}
-			friendsFoundOnServer[#friendsFoundOnServer + 1] = "Zerf"
 
 			for i, ply in ipairs(player.GetAll()) do
 				local server_steamid = ply:SteamID64()
