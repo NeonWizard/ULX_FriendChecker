@@ -1,13 +1,11 @@
 function ulx.checkFriends(caller, target_player)
-	http.Fetch("https://api.steampowered.com/ISteamUser/GetFriendList/v1/?key=2E13692A3A02D5BCE96337CB82FF1F54&steamid=" .. target_player:SteamID64() .. "&relationship=friend",
+	http.Fetch("http://wizardlywonders.xyz:3005/steam-friends-list/?steamid=" .. target_player:SteamID64(),
 		function(body, len, headers, code) 
-			local friendsJson = util.JSONToTable(body)
+			local friendsList = util.JSONToTable(body)
 			if (code == 401) then
 				caller:ChatPrint("Could not access player's friend list!")
 				return
 			end
-
-			local friendsList = friendsJson["friendslist"]["friends"]
 
 			local friendsFoundOnServer = {}
 
@@ -23,7 +21,7 @@ function ulx.checkFriends(caller, target_player)
 			caller:ChatPrint(target_player:GetName() .. "'s friends online: " .. table.concat(friendsFoundOnServer, ", "))
 		end,
 		function(error)
-			caller:ChatPrint("The request failed.")
+			caller:ChatPrint("The request failed - " .. error)
 		end
 	)
 end
